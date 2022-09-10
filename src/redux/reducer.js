@@ -14,8 +14,6 @@ const initialStore = {
 const contacts = createReducer(initialStore, {
   [addContact]: (state, { payload }) => {
     state.items.push(payload)
-    // const newContact = [...state.items, payload];
-    // return { ...state, items: newContact };
   },
   [removeContact]: (state, { payload }) => {
     const result = state.items.filter(item => item.id !== payload);
@@ -23,27 +21,7 @@ const contacts = createReducer(initialStore, {
   },
   [setFilter]: (store, { payload }) => {
     store.filter = payload;
-    // return { ...store, filter: payload };
   },
 });
 
 export default contacts;
-
-// const filter = createReducer('', {
-//   [setFilter]: (_, { payload }) => payload,
-// });
-
-// const reducer = (store = initialStore, { type, payload }) => {
-//   switch (type) {
-//     case ADD_CONTACT:
-//       const newContact = [...store.contacts, payload];
-//       return { ...store, contacts: newContact };
-//     case REMOVE_CONTACT:
-//       const result = store.contacts.filter(item => item.id !== payload);
-//       return { ...store, contacts: result };
-//     case SET_FILTER:
-//       return { ...store, filter: payload };
-//     default:
-//       return store;
-//   }
-// };
