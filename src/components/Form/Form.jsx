@@ -1,43 +1,20 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { addContact } from 'redux/actions';
+import { addContactsApi } from 'redux/contacts-operations';
 
 import s from './form.module.scss';
 
 export default function Form() {
   const dispatch = useDispatch();
-  const currentContacts = useSelector(state => state.contacts.items);
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
   const handleSubmit = e => {
     e.preventDefault();
 
-    if (checkDuplicateName()) {
-      return;
-    }
-
-    dispatch(addContact({ name, number }));
+    dispatch(addContactsApi({ name, number }));
     reset();
-  };
-
-  const checkDuplicateName = () => {
-    let isAlredyHasContact = false;
-    let dublicatedName = null;
-    const normalizeName = name.toLowerCase();
-
-    currentContacts?.map(
-      el =>
-        el.name.toLowerCase() === normalizeName &&
-        ((isAlredyHasContact = true), (dublicatedName = el.name))
-    );
-
-    if (isAlredyHasContact) {
-      alert(dublicatedName + ' is alredy in your contact');
-    }
-
-    return isAlredyHasContact;
   };
 
   const reset = () => {

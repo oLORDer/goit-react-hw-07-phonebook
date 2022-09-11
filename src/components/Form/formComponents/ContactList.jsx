@@ -2,16 +2,15 @@ import { nanoid } from 'nanoid';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import action from 'redux/actions';
 import { getContactsApi, getStateContacts } from 'redux/selectors';
-import { fetchContacts } from 'redux/contacts-operations';
+import { fetchContacts, removeContact } from 'redux/contacts-operations';
 
 import s from 'components/Form/form.module.scss';
 
 export default function ContactList() {
   const dispatch = useDispatch();
   const currentContacts = useSelector(getContactsApi);
-  const {loading, error} = useSelector(getStateContacts);
+  const {loading} = useSelector(getStateContacts);
   const filterWord = useSelector(state => state.contacts.filter);
   const filteredContacts = currentContacts?.filter(el =>
     el.name.toLowerCase().includes(filterWord.toLowerCase())
@@ -22,7 +21,7 @@ export default function ContactList() {
   }, [dispatch]);
 
   const deleteContact = id => {
-    dispatch(action.removeContact(id));
+    dispatch(removeContact(id));
   };
 
   return (

@@ -9,12 +9,29 @@ const initialStore = {
 };
 
 const contacts = createReducer(initialStore, {
-  [action.addContact]: (state, { payload }) => {
-    state.items.push(payload);
+  [action.addContactLoading]: (store) => {
+    store.loading = true;
+    store.error = null;
   },
-  [action.removeContact]: (state, { payload }) => {
-    const result = state.items.filter(item => item.id !== payload);
-    return { ...state, items: result };
+  [action.addContactSuccess]: (store, {payload}) => {
+    store.items.push(payload);
+    store.loading = false;
+  },
+  [action.addContactError]: (store, {payload}) => {
+    store.loading = false;
+    store.error = payload;
+  },
+  [action.removeContactLoading]: (store) => {
+    store.loading = true;
+    store.error = null;
+  },
+  [action.removeContactSuccess]: (store, {payload}) => {
+    store.loading = false;
+    store.items = store.items.filter( item => item.id !== payload);
+  },
+  [action.removeContactError]: (store, {payload}) => {
+    store.loading = false;
+    store.error = payload;
   },
   [action.setFilter]: (store, { payload }) => {
     store.filter = payload;
