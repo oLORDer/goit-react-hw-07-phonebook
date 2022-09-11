@@ -1,17 +1,25 @@
 import { nanoid } from 'nanoid';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { removeContact } from 'redux/actions';
+import { getContactsApi, getStateContacts } from 'redux/selectors';
+import { fetchContacts } from 'redux/contacts-operations';
 
 import s from 'components/Form/form.module.scss';
 
 export default function ContactList() {
   const dispatch = useDispatch();
-  const currentContacts = useSelector(state => state.contacts.items);
+  const currentContacts = useSelector(getContactsApi);
+  const {loading, error} = useSelector(getStateContacts);
   const filterWord = useSelector(state => state.contacts.filter);
   const filteredContacts = currentContacts?.filter(el =>
     el.name.toLowerCase().includes(filterWord.toLowerCase())
   );
+
+  useEffect(() => {
+    dispatch(fetchContacts())
+  }, [dispatch]);
 
   const deleteContact = id => {
     dispatch(removeContact(id));
@@ -21,10 +29,10 @@ export default function ContactList() {
     <div>
       <h2>Contacts</h2>
       <ul>
-        {filteredContacts?.map(({ id, name, number }) => {
+        {!loading && filteredContacts?.map(({ id, name, phone }) => {
           return (
             <li key={nanoid()} id={id} className={s.item}>
-              <div>{`${name}: ${number}`}</div>
+              <div>{`${name}: ${phone}`}</div>
               <button
                 className={s.deleteBtn}
                 type="button"
@@ -36,6 +44,7 @@ export default function ContactList() {
           );
         })}
       </ul>
+      {loading && <p>Loading contacts...</p>}
     </div>
   );
 }

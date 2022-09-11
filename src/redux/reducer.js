@@ -1,19 +1,23 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { addContact, removeContact, setFilter } from './actions';
+import {
+  addContact,
+  removeContact,
+  setFilter,
+  fetchContactsError,
+  fetchContactsLoading,
+  fetchContactsSuccess,
+} from './actions';
 
 const initialStore = {
-  items: [
-    { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-    { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-    { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-    { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-  ],
+  items: [],
   filter: '',
+  loading: false,
+  error: null,
 };
 
 const contacts = createReducer(initialStore, {
   [addContact]: (state, { payload }) => {
-    state.items.push(payload)
+    state.items.push(payload);
   },
   [removeContact]: (state, { payload }) => {
     const result = state.items.filter(item => item.id !== payload);
@@ -22,6 +26,18 @@ const contacts = createReducer(initialStore, {
   [setFilter]: (store, { payload }) => {
     store.filter = payload;
   },
+  [fetchContactsLoading]: (store) => {
+    store.loading = true;
+    store.error = null;
+  },
+  [fetchContactsSuccess]: (store, {payload}) => {
+    store.items = payload;
+    store.loading = false;
+  },
+  [fetchContactsError]: (store, {payload}) => {
+    store.loading = false;
+    store.error = payload;
+  }
 });
 
 export default contacts;
