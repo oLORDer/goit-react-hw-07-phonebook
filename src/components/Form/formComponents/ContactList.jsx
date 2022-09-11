@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { removeContact } from 'redux/actions';
+import action from 'redux/actions';
 import { getContactsApi, getStateContacts } from 'redux/selectors';
 import { fetchContacts } from 'redux/contacts-operations';
 
@@ -22,7 +22,7 @@ export default function ContactList() {
   }, [dispatch]);
 
   const deleteContact = id => {
-    dispatch(removeContact(id));
+    dispatch(action.removeContact(id));
   };
 
   return (
