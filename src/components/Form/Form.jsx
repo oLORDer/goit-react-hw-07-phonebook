@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { addContactsApi } from 'redux/contacts-operations';
+import { addContacts } from 'redux/contacts-operations';
 
 import s from './form.module.scss';
 
@@ -13,7 +13,7 @@ export default function Form() {
   const handleSubmit = e => {
     e.preventDefault();
 
-    dispatch(addContactsApi({ name, number }));
+    dispatch(addContacts({ name, number }));
     reset();
   };
 

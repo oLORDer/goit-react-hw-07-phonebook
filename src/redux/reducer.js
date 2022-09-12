@@ -8,6 +8,7 @@ const initialStore = {
   error: null,
 };
 
+
 const contacts = createReducer(initialStore, {
   [action.addContactLoading]: (store) => {
     store.loading = true;
