@@ -26,7 +26,7 @@ export default function ContactList() {
     dispatch(removeContact(id));
   };
 
-  return (`
+  return (
     <div>
       <h2>Contacts</h2>
       <ul>
