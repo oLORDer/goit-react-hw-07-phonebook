@@ -1,11 +1,11 @@
 import { useDispatch } from 'react-redux';
 
-import action from 'redux/actions';
+import { setFilter } from 'redux/filter';
 
 export default function Filter() {
   const dispatch = useDispatch();
   const contactsFilter = ({ target }) => {
-    dispatch(action.setFilter(target.value));
+    dispatch(setFilter(target.value));
   };
 
   return (

@@ -11,7 +11,7 @@ export default function ContactList() {
   const dispatch = useDispatch();
   const currentContacts = useSelector(getContactsApi);
   const {loading} = useSelector(getStateContacts);
-  const filterWord = useSelector(state => state.contacts.filter);
+  const filterWord = useSelector(state => state.filter);
   const filteredContacts = currentContacts?.filter(el =>
     el.name.toLowerCase().includes(filterWord.toLowerCase())
   );
